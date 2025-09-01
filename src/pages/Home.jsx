@@ -1,10 +1,18 @@
-import React from 'react'
-// import { Link } from 'react-router-dom';
-import ProductList from '../components/ProductList';
-
-import img from '../assets/tamara-bellis-IwVRO3TLjLc-unsplash.jpg'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 function Home() {
+
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const [product, setProduct] = useState([])
+
+    useEffect(() => {
+        axios.get(`${backendUrl}/products/`)
+        .then((response) => setProduct(response.data))
+        .catch((error) => console.log(error))
+    }, [])
+
   return (
     <section>
         <div className="banner">
@@ -15,54 +23,20 @@ function Home() {
 
         <div className="container mt-5">
             <div className="row mt-5">
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
-                <div className="col-12 col-md-6 col-lg-4 my-5">
-                      <ProductList
-                          img={img}
-                          name={"Dress"}
-                          description={"This is a beautiful dress"}
-                          price={45000}
-                      />
-                </div>
+                {
+                    product.map((products) => (
+                        <div className="col-12 col-md-6 col-lg-4 my-5">
+                            <div className="card mx-auto" style={{ width: "18rem" }}>
+                                <img src={backendUrl + products?.first_image} className="card-img-top img-fluid" alt={products?.name} style={{ height: "18rem", objectFit: "cover" }} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{products?.name}</h5>
+                                    <p className='card-text text-success fw-bold'>{products?.price}</p>
+                                    <Link className="btn btn-primary mt-2 d-flex justify-content-center card-link">Add to cart</Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     </section>
