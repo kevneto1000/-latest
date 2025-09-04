@@ -16,6 +16,7 @@ function Login() {
         axios.post(`${backendUrl}/login/`, form)
         .then((response) => {
             // console.log("Login Successful: " + response.data)
+            localStorage.setItem("userId", response.data.user.id)
             alert("Login Successful", response.data)
             navigate("/")
         })
