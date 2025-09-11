@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import  axios  from 'axios';
+import { CartContext } from '../context/CartContext';
 
 
 function ProductDetails() {
   const backendUrl = import.meta.env.VITE_API_URL;
   const {id} = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     axios.get(`${backendUrl}/products/${id}`)
@@ -53,7 +55,7 @@ function ProductDetails() {
           <div className="col-12 col-md-3 border border-1 border-secondary-sublte rounded-2 h-25 d-flex flex-column justify-content-center">
             <h3 className='m-4'>{"₦"+product?.price}</h3>
             <p className='text-secondary fw-bold'>We have {product?.in_stock} items left.</p>
-            <button className="btn btn-primary m-4">Add to Cart</button>
+            <button className="btn btn-primary m-4" onClick={() => addToCart(product.id)}>Add to Cart</button>
           </div>
         </div>
       </div>

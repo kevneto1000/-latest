@@ -6,6 +6,7 @@ import { CartContext } from '../context/CartContext';
 
 function Navbar() {
     let backendUrl = import.meta.env.VITE_API_URL;
+    const userId = localStorage.getItem("userId")
 
     const { cartCount } = useContext(CartContext);
 
@@ -134,9 +135,17 @@ function Navbar() {
                             </span>
                         </Link>
 
-                        <button className='btn btn-warning'>
-                            <Link to="/login">Login</Link>
-                        </button>
+                        {   
+                            !userId ?
+                                <button className='btn btn-warning'>
+                                    <Link to="/login">Login</Link>
+                                </button>
+                            : 
+
+                                <button className='btn btn-warning'>
+                                    <Link to="/login">Signout</Link>
+                                </button>
+                        }
                         
                     </div>
                 </div>

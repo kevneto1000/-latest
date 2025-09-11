@@ -11,12 +11,14 @@ function Login() {
     function handleLogin(e) {
         e.preventDefault();
 
-        let form = new FormData(e.currentTarget);
+        const email = e.target.email.value;
+        const password = e.target.password.value;
 
-        axios.post(`${backendUrl}/login/`, form)
+        axios.post(`${backendUrl}/login/`, {email, password})
         .then((response) => {
             // console.log("Login Successful: " + response.data)
-            localStorage.setItem("userId", response.data.user.id)
+            localStorage.setItem("userId", response.data.id);
+            localStorage.setItem("userEmail", response.data.email);
             alert("Login Successful", response.data)
             navigate("/")
         })

@@ -41,3 +41,16 @@
 .cart {
     min-height: 20rem;
 }
+
+.details {
+    line-height: 10px;
+}
+
+.img-logo {
+    width: 5rem;
+}
+
+.pay {
+    width: 13rem;
+    height: 10rem;
+}
